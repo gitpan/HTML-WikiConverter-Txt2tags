@@ -1,6 +1,6 @@
 local $/;
 require 't/runtests.pl';
-runtests( data => <DATA>, dialect => 'DokuWiki', wiki_uri => 'http://www.test.com/wiki:', camel_case => 1 );
+runtests( data => <DATA>, dialect => 'Txt2tags', wiki_uri => 'http://www.test.com/wiki:', camel_case => 1 );
 close DATA;
 
 __DATA__
@@ -29,7 +29,7 @@ __H__
 <tr><td>xxxxxxxxxxxx</td><td>xxxxxxxxxxxx</td><td>xxxxxxxxxxxx</td></tr>
 </table>
 __W__
-^  Table with alignment  ^^^
+|  Table with alignment  |||
 |  right |  center  | left  |
 | left  |  right |  center  |
 | xxxxxxxxxxxx | xxxxxxxxxxxx | xxxxxxxxxxxx |
@@ -43,7 +43,7 @@ __H__
 <tr><td class="leftalign">Row 3 Col 1</td><td class="leftalign">Row 2 Col 2</td><td class="leftalign">Row 2 Col 3</td></tr>
 </table>
 __W__
-^ Heading 1  ^ Heading 2  ^ Heading 3  ^
+| Heading 1  | Heading 2  | Heading 3  |
 | Row 1 Col 1  | Row 1 Col 2  | Row 1 Col 3  |
 | Row 2 Col 1  | some colspan (note the double pipe) ||
 | Row 3 Col 1  | Row 2 Col 2  | Row 2 Col 3  |
@@ -56,57 +56,59 @@ __H__
 <tr><th>odd</th><td>true</td></tr>
 </table>
 __W__
-^ name | foo |
-^ age | 3.14 |
-^ odd | true |
+| name | foo |
+| age | 3.14 |
+| odd | true |
 __NEXT__
 h1
 __H__
 <h1>one</h1>
 __W__
-====== one ======
+= one =
 __NEXT__
 h2
 __H__
 <h2>two</h2>
 __W__
-===== two =====
+
+== two ==
+
 __NEXT__
 h3
 __H__
 <h3>three</h3>
 __W__
-==== three ====
+=== three ===
 __NEXT__
 h4
 __H__
 <h4>four</h4>
 __W__
-=== four ===
+==== four ====
 __NEXT__
 h5
 __H__
 <h5>five</h5>
 __W__
-== five ==
+===== five =====
 __NEXT__
 h6
 __H__
 <h6>six</h6>
 __W__
-== six ==
+====== six ======
 __NEXT__
 external image
 __H__
 <img src="http://wiki.splitbrain.org/fetch.php?w=&h=&cache=cache&media=wiki:dokuwiki-128.png" />
 __W__
-{{http://wiki.splitbrain.org/fetch.php?w=&h=&cache=cache&media=wiki:dokuwiki-128.png}}
+[http://wiki.splitbrain.org/fetch.php?w=&h=&cache=cache&media=wiki:dokuwiki-128.png]
 __NEXT__
 external image (resize width)
 __H__
 <img src="http://wiki.splitbrain.org/fetch.php?w=&h=&cache=cache&media=wiki:dokuwiki-128.png" width="25" />
 __W__
-{{http://wiki.splitbrain.org/fetch.php?w=&h=&cache=cache&media=wiki:dokuwiki-128.png?25}}
+[http://wiki.splitbrain.org/fetch.php?w=&h=&cache=cache&media=wiki:dokuwiki-128.png?25]
 __NEXT__
 external image (resize width and height)
 __H__
@@ -118,37 +120,37 @@ external image align (left)
 __H__
 <img src="http://wiki.splitbrain.org/fetch.php?w=&h=&cache=cache&media=wiki:dokuwiki-128.png" class="medialeft" />
 __W__
-{{http://wiki.splitbrain.org/fetch.php?w=&h=&cache=cache&media=wiki:dokuwiki-128.png }}
+[ http://wiki.splitbrain.org/fetch.php?w=&h=&cache=cache&media=wiki:dokuwiki-128.png ]
 __NEXT__
 external image align (right)
 __H__
 <img src="http://wiki.splitbrain.org/fetch.php?w=&h=&cache=cache&media=wiki:dokuwiki-128.png" class="mediaright" />
 __W__
-{{ http://wiki.splitbrain.org/fetch.php?w=&h=&cache=cache&media=wiki:dokuwiki-128.png}}
+[ http://wiki.splitbrain.org/fetch.php?w=&h=&cache=cache&media=wiki:dokuwiki-128.png]
 __NEXT__
 external image align (center)
 __H__
 <img src="http://wiki.splitbrain.org/fetch.php?w=&h=&cache=cache&media=wiki:dokuwiki-128.png" class="mediacenter" />
 __W__
-{{ http://wiki.splitbrain.org/fetch.php?w=&h=&cache=cache&media=wiki:dokuwiki-128.png }}
+[ http://wiki.splitbrain.org/fetch.php?w=&h=&cache=cache&media=wiki:dokuwiki-128.png ]
 __NEXT__
 external image align (center w/ caption)
 __H__
 <img src="http://wiki.splitbrain.org/fetch.php?w=&h=&cache=cache&media=wiki:dokuwiki-128.png" class="mediacenter" alt="Caption" />
 __W__
-{{ http://wiki.splitbrain.org/fetch.php?w=&h=&cache=cache&media=wiki:dokuwiki-128.png |Caption}}
+[ http://wiki.splitbrain.org/fetch.php?w=&h=&cache=cache&media=wiki:dokuwiki-128.png ]
 __NEXT__
 blockquote
 __H__
 <blockquote>one</blockquote>
 __W__
-> one
+	one
 __NEXT__
 blockquote (nested)
 __H__
 <blockquote><blockquote>two</blockquote></blockquote>
 __W__
->> two
+	two
 __NEXT__
 blockquote (multi-line)
 __H__
@@ -156,7 +158,7 @@ __H__
 single
 line</blockquote>
 __W__
-> span single line
+	span single line
 __NEXT__
 blockquote (nested multi-line)
 __H__
@@ -164,7 +166,7 @@ __H__
 single
 line</blockquote></blockquote>
 __W__
->> span single line
+	span single line
 __NEXT__
 blockquote (markup)
 __H__
@@ -173,14 +175,14 @@ markup</em> that <u>spans
 multiple
 lines</u></blockquote>
 __W__
-> **with** //fancy markup// that __spans multiple lines__
+	**with** //fancy markup// that __spans multiple lines__
 __NEXT__
 blockquote (nested continuous)
 __H__
 <blockquote>one<blockquote>two</blockquote></blockquote>
 __W__
-> one
->> two
+	one
+		two
 __NEXT__
 blockquote (doubly nested continuous)
 __H__
@@ -194,7 +196,8 @@ blockquote (linebreak)
 __H__
 <blockquote>line<br />break</blockquote>
 __W__
-> line\\ break
+	line
+	break
 __NEXT__
 blockquote (full)
 __H__
@@ -256,7 +259,7 @@ external link (named)
 __H__
 <a href="http://www.test.com">test</a>
 __W__
-[[http://www.test.com|test]]
+[test http://www.test.com]
 __NEXT__
 external link (fragment)
 __H__
@@ -302,9 +305,9 @@ __H__
   <li>three
 </ul>
 __W__
-  * one
-  * two
-  * three
+ - one
+ - two
+ - three
 __NEXT__
 ul (nested)
 __H__
@@ -319,11 +322,11 @@ __H__
   <li>3
 </ul>
 __W__
-  * 1
-    * 1.a
-    * 1.b
-  * 2
-  * 3
+ - 1
+  - 1.a
+  - 1.b
+ - 2
+ - 3
 __NEXT__
 ol
 __H__
@@ -333,9 +336,9 @@ __H__
   <li>three
 </ol>
 __W__
-  - one
-  - two
-  - three
+ + one
+ + two
+ + three
 __NEXT__
 ol (nested)
 __H__
@@ -350,11 +353,11 @@ __H__
   <li>3
 </ol>
 __W__
-  - 1
-    - 1.a
-    - 1.b
-  - 2
-  - 3
+ + 1
+  + 1.a
+  + 1.b
+ + 2
+ + 3
 __NEXT__
 ul/ol combo
 __H__
@@ -369,11 +372,11 @@ __H__
   <li>3
 </ol>
 __W__
-  - 1
-    * 1.a
-    * 1.b
-  - 2
-  - 3
+ + 1
+  - 1.a
+  - 1.b
+ + 2
+ + 3
 __NEXT__
 ol/ul combo
 __H__
@@ -388,8 +391,8 @@ __H__
   <li>3
 </ul>
 __W__
-  * 1
-    - 1.a
-    - 1.b
-  * 2
-  * 3
+ - 1
+  + 1.a
+  + 1.b
+ - 2
+ - 3
